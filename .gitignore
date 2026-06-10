@@ -1,3 +1,9 @@
+# 개인 자료 (이력서 등 — 절대 커밋 금지)
+자료/
+
+# 임시 스크립트
+scripts/extract-pdf.mjs
+
 # build output
 dist/
 
