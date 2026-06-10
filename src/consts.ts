@@ -13,7 +13,11 @@ export const CATEGORY_IDS = [
 
 export type CategoryId = (typeof CATEGORY_IDS)[number];
 
-export const SERIES_IDS = ['terraform-zero-to-prod', 'aws-security-ops'] as const;
+export const SERIES_IDS = [
+  'terraform-zero-to-prod',
+  'aws-security-ops',
+  'securing-ai-agents',
+] as const;
 
 export type SeriesId = (typeof SERIES_IDS)[number];
 
@@ -27,6 +31,11 @@ export const SERIES: Record<SeriesId, { title: string; description: string }> = 
     title: 'AWS 보안 운영의 기본기',
     description:
       '보안 서비스 지도로 전체 그림을 잡고, 신규 계정 베이스라인을 세우고, 운영 자동화로 유지한다 — AWS 보안의 최소 기준선을 만드는 시리즈.',
+  },
+  'securing-ai-agents': {
+    title: '자율 AI 에이전트 보안',
+    description:
+      '프롬프트 인젝션을 전제로 에이전트의 도구 권한을 설계하고, IAM·Cedar·Cilium·Tetragon 4계층으로 인젝션 킬체인을 실제로 차단하기까지.',
   },
 };
 

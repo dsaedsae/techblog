@@ -630,6 +630,280 @@ html[data-theme='dark'] .astro-code span {
   margin-bottom: 0.35rem;
 }
 
+/* ===== 통합 장문 글(AI 에이전트 심층 방어 등)의 커스텀 컴포넌트 ===== */
+/* 본문 내 목차 */
+.prose .toc {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.1rem 1.4rem;
+  margin: 0 0 2.5rem;
+}
+
+.prose .toc h3 {
+  margin: 0 0 0.7rem;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.prose .toc ol {
+  margin: 0;
+  padding-left: 1.3rem;
+}
+
+.prose .toc li {
+  margin: 0.3rem 0;
+}
+
+/* 섹션 번호 배지 */
+.prose h2 .section-num {
+  color: var(--accent);
+  margin-right: 0.4rem;
+  font-family: var(--font-mono);
+}
+
+.prose h4 {
+  font-size: 1rem;
+  margin: 1.4rem 0 0.5rem;
+  color: var(--text);
+}
+
+/* 코드리뷰/주석 콜아웃 */
+.prose .review-block {
+  margin: 1.2rem 0;
+  padding: 0.9rem 1.1rem;
+  border-radius: 0 6px 6px 0;
+  border-left: 4px solid var(--border);
+  background: var(--bg-soft);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.prose .review-block.danger {
+  border-color: #d13212;
+  background: color-mix(in srgb, #d13212 9%, var(--bg));
+}
+
+.prose .review-block.warn {
+  border-color: #f0a500;
+  background: color-mix(in srgb, #f0a500 10%, var(--bg));
+}
+
+.prose .review-block.ok {
+  border-color: #1d8348;
+  background: color-mix(in srgb, #1d8348 10%, var(--bg));
+}
+
+.prose .review-block.info {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.prose .review-label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.prose .review-block.danger .review-label {
+  color: #e5534b;
+}
+.prose .review-block.warn .review-label {
+  color: #d29922;
+}
+.prose .review-block.ok .review-label {
+  color: #3fb950;
+}
+.prose .review-block.info .review-label {
+  color: var(--accent);
+}
+
+.prose .review-block code {
+  background: var(--code-inline-bg);
+}
+
+/* 다이어그램 카드: SVG가 흰 배경 기준이라 카드 배경을 고정한다 */
+.prose .diagram-wrap {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.4rem;
+  margin: 1.6rem 0;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.prose .diagram-wrap svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose .diagram-caption {
+  margin-top: 0.8rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+/* 통계 카드 */
+.prose .stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.8rem;
+  margin: 1.4rem 0;
+}
+
+.prose .stat-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 0.9rem;
+  text-align: center;
+}
+
+.prose .stat-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text);
+}
+
+.prose .stat-value.danger {
+  color: #e5534b;
+}
+.prose .stat-value.ok {
+  color: #3fb950;
+}
+
+.prose .stat-label {
+  margin-top: 0.4rem;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+/* 인라인 배지 */
+.prose .badge {
+  display: inline-block;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.prose .badge-allow {
+  background: color-mix(in srgb, #1d8348 18%, var(--bg));
+  color: #3fb950;
+}
+.prose .badge-deny {
+  background: color-mix(in srgb, #d13212 18%, var(--bg));
+  color: #e5534b;
+}
+.prose .badge-drop {
+  background: color-mix(in srgb, #e67e22 20%, var(--bg));
+  color: #e08a3c;
+}
+.prose .badge-kill {
+  background: color-mix(in srgb, #2471a3 22%, var(--bg));
+  color: #58a6ff;
+}
+
+/* 피어 리뷰 발견 카드 */
+.prose .findings-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.6rem 0;
+}
+
+.prose .finding-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.prose .finding-header {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
+}
+
+.prose .finding-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.76rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.prose .finding-title {
+  flex: 1;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.prose .finding-file {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.prose .finding-body {
+  padding: 0.8rem 0.9rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.prose .finding-scenario {
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.8rem;
+  background: var(--bg-soft);
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* 심각도 색상(발견 번호 배지 + Critical/High/Medium 배지) */
+.prose .sev-critical {
+  background: color-mix(in srgb, #d13212 18%, var(--bg));
+  color: #e5534b;
+}
+.prose .sev-high {
+  background: color-mix(in srgb, #e67e22 20%, var(--bg));
+  color: #e08a3c;
+}
+.prose .sev-medium {
+  background: color-mix(in srgb, #2980b9 20%, var(--bg));
+  color: #58a6ff;
+}
+
+/* 결론 박스 */
+.prose .conclusion-box {
+  margin: 2.5rem 0;
+  padding: 1.6rem 1.8rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+}
+
+.prose .conclusion-box h3 {
+  margin-top: 0;
+  color: var(--accent);
+}
+
 /* ===== Mermaid 다이어그램 ===== */
 .mermaid-diagram {
   margin: 1.4rem 0;
