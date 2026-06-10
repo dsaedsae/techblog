@@ -6,6 +6,7 @@ export const CATEGORY_IDS = [
   'aws',
   'terraform',
   'devsecops',
+  'offensive-security',
   'ai-agent-security',
   'scripts',
 ] as const;
@@ -41,6 +42,10 @@ export const CATEGORIES: Record<CategoryId, { label: string; description: string
   devsecops: {
     label: 'DevSecOps',
     description: 'CI/CD 보안, 파이프라인 자동화, 시큐어 코딩',
+  },
+  'offensive-security': {
+    label: 'Offensive Security',
+    description: '공격자 시점의 침투 시뮬레이션, 웹/API 취약점 분석, CTF',
   },
   'ai-agent-security': {
     label: 'AI Agent Security',
