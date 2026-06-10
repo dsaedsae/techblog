@@ -1,0 +1,41 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import { CATEGORIES } from '../consts';
+import { postUrl, categoryUrl, tagUrl, type Post } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+{
+  posts.length === 0 ? (
+    <p class="page-desc">아직 글이 없습니다.</p>
+  ) : (
+    <ul class="post-list">
+      {posts.map((post) => (
+        <li class="post-item">
+          <div class="post-meta">
+            <a class="category-badge" href={categoryUrl(post.data.category)}>
+              {CATEGORIES[post.data.category].label}
+            </a>
+            <FormattedDate date={post.data.date} />
+          </div>
+          <a class="post-item-title" href={postUrl(post)}>
+            {post.data.title}
+          </a>
+          <p class="post-item-desc">{post.data.description}</p>
+          <ul class="tag-list">
+            {post.data.tags.map((tag) => (
+              <li>
+                <a href={tagUrl(tag)}>#{tag}</a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  )
+}

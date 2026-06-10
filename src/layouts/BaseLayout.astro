@@ -1,0 +1,81 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+}
+
+const { title, description, type, publishedDate } = Astro.props;
+---
+
+<!doctype html>
+<html lang="ko" data-theme="dark">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      type={type}
+      publishedDate={publishedDate}
+    />
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // 코드 블록 강화: 파일명 표시줄(data-title) + 복사 버튼
+      function enhanceCodeBlocks() {
+        for (const pre of document.querySelectorAll<HTMLPreElement>('pre.astro-code')) {
+          // mermaid 코드 펜스는 다이어그램으로 변환되므로 건너뛴다
+          if (pre.dataset.language === 'mermaid') continue;
+          if (pre.parentElement?.classList.contains('code-block')) continue;
+
+          const wrapper = document.createElement('div');
+          wrapper.className = 'code-block';
+          pre.replaceWith(wrapper);
+
+          const button = document.createElement('button');
+          button.className = 'copy-btn';
+          button.type = 'button';
+          button.textContent = 'Copy';
+          button.setAttribute('aria-label', '코드 복사');
+          button.addEventListener('click', async () => {
+            try {
+              await navigator.clipboard.writeText(pre.innerText.replace(/\n$/, ''));
+              button.textContent = 'Copied!';
+              button.classList.add('copied');
+              setTimeout(() => {
+                button.textContent = 'Copy';
+                button.classList.remove('copied');
+              }, 1500);
+            } catch (_) {
+              button.textContent = 'Failed';
+            }
+          });
+
+          const title = pre.dataset.title;
+          if (title) {
+            const titleBar = document.createElement('div');
+            titleBar.className = 'code-title';
+            const name = document.createElement('span');
+            name.textContent = title;
+            titleBar.append(name, button);
+            wrapper.append(titleBar, pre);
+          } else {
+            wrapper.append(pre, button);
+          }
+        }
+      }
+
+      enhanceCodeBlocks();
+    </script>
+  </body>
+</html>

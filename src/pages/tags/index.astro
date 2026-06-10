@@ -1,0 +1,23 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getPosts, collectTags, tagUrl } from '../../lib/posts';
+
+const posts = await getPosts();
+const tags = collectTags(posts);
+---
+
+<BaseLayout title="Tags" description="태그별 글 아카이브">
+  <h1 class="page-title">Tags</h1>
+  <p class="page-desc">태그별로 글을 모아 봅니다.</p>
+  <ul class="tag-list">
+    {
+      tags.map(({ tag, count }) => (
+        <li>
+          <a href={tagUrl(tag)}>
+            #{tag} ({count})
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>

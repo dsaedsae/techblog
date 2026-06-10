@@ -1,0 +1,14 @@
+---
+import { SITE_TITLE } from '../consts';
+import { withBase } from '../lib/url';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <p>
+    © {year} {SITE_TITLE} ·
+    <a href={withBase('/rss.xml')}>RSS</a> ·
+    <a href="https://github.com/dsaedsae" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </p>
+</footer>

@@ -1,0 +1,77 @@
+---
+import { SITE_TITLE } from '../consts';
+import { withBase } from '../lib/url';
+
+const navItems = [
+  { href: withBase('/categories/'), label: 'Categories' },
+  { href: withBase('/tags/'), label: 'Tags' },
+  { href: withBase('/about/'), label: 'About' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-title" href={withBase('/')}>{SITE_TITLE}</a>
+    <nav class="site-nav" aria-label="주 메뉴">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={currentPath.startsWith(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <button id="theme-toggle" aria-label="라이트/다크 모드 전환" title="라이트/다크 모드 전환">
+        <svg
+          class="icon-sun"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="4"></circle>
+          <path
+            d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32 1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+          ></path>
+        </svg>
+        <svg
+          class="icon-moon"
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+        </svg>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<script>
+  document.getElementById('theme-toggle')?.addEventListener('click', () => {
+    const root = document.documentElement;
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try {
+      localStorage.setItem('theme', next);
+    } catch (_) {
+      /* 저장 실패해도 토글 자체는 동작 */
+    }
+    window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme: next } }));
+  });
+</script>

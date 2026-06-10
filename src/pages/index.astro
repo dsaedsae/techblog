@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PostList from '../components/PostList.astro';
+import { SITE_TITLE, SITE_DESCRIPTION, CATEGORIES, CATEGORY_IDS } from '../consts';
+import { getPosts, categoryUrl } from '../lib/posts';
+
+const posts = await getPosts();
+const recentPosts = posts.slice(0, 10);
+---
+
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+  <section>
+    <h1 class="page-title">{SITE_TITLE}</h1>
+    <p class="page-desc">{SITE_DESCRIPTION}</p>
+    <ul class="tag-list" style="margin-bottom: 2.2rem;">
+      {
+        CATEGORY_IDS.map((id) => (
+          <li>
+            <a href={categoryUrl(id)}>{CATEGORIES[id].label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section>
+    <h2 class="page-title" style="font-size: 1.2rem;">최신 글</h2>
+    <PostList posts={recentPosts} />
+  </section>
+</BaseLayout>

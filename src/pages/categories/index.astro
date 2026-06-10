@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { CATEGORIES, CATEGORY_IDS } from '../../consts';
+import { getPosts, categoryUrl } from '../../lib/posts';
+
+const posts = await getPosts();
+const countByCategory = new Map<string, number>();
+for (const post of posts) {
+  countByCategory.set(
+    post.data.category,
+    (countByCategory.get(post.data.category) ?? 0) + 1
+  );
+}
+---
+
+<BaseLayout title="Categories" description="카테고리별 글 아카이브">
+  <h1 class="page-title">Categories</h1>
+  <p class="page-desc">주제별로 글을 모아 봅니다.</p>
+  <div class="category-grid">
+    {
+      CATEGORY_IDS.map((id) => (
+        <a class="category-card" href={categoryUrl(id)}>
+          <h2>
+            {CATEGORIES[id].label}
+            <span class="count">{countByCategory.get(id) ?? 0}개</span>
+          </h2>
+          <p>{CATEGORIES[id].description}</p>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

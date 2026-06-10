@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getPosts, collectTags } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return collectTags(posts).map(({ tag }) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+const posts = (await getPosts()).filter((post) => post.data.tags.includes(tag!));
+---
+
+<BaseLayout title={`#${tag}`} description={`'${tag}' 태그가 달린 글 목록`}>
+  <h1 class="page-title">#{tag}</h1>
+  <p class="page-desc">{posts.length}개의 글</p>
+  <PostList posts={posts} />
+</BaseLayout>

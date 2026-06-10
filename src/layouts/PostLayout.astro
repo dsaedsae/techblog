@@ -1,0 +1,95 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { CATEGORIES } from '../consts';
+import { categoryUrl, tagUrl, type Post } from '../lib/posts';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const { title, description, date, category, tags } = post.data;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedDate={date}
+>
+  <article>
+    <header class="post-header">
+      <div class="post-meta">
+        <a class="category-badge" href={categoryUrl(category)}>
+          {CATEGORIES[category].label}
+        </a>
+        <FormattedDate date={date} />
+      </div>
+      <h1>{title}</h1>
+      <p class="post-item-desc">{description}</p>
+      <ul class="tag-list">
+        {
+          tags.map((tag) => (
+            <li>
+              <a href={tagUrl(tag)}>#{tag}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </header>
+    <div class="prose">
+      <slot />
+    </div>
+  </article>
+
+  <script>
+    // ```mermaid 코드 펜스를 클라이언트에서 SVG 다이어그램으로 렌더링한다.
+    // mermaid 패키지는 다이어그램이 있는 페이지에서만 동적 import로 로드된다.
+    async function initMermaid() {
+      const blocks = document.querySelectorAll<HTMLPreElement>(
+        'pre.astro-code[data-language="mermaid"]'
+      );
+      if (blocks.length === 0) return;
+
+      const { default: mermaid } = await import('mermaid');
+
+      const containers: HTMLDivElement[] = [];
+      blocks.forEach((pre) => {
+        const container = document.createElement('div');
+        container.className = 'mermaid-diagram';
+        container.dataset.source = pre.innerText;
+        pre.replaceWith(container);
+        containers.push(container);
+      });
+
+      let renderSeq = 0;
+      async function renderAll() {
+        const isDark = document.documentElement.dataset.theme !== 'light';
+        mermaid.initialize({
+          startOnLoad: false,
+          theme: isDark ? 'dark' : 'default',
+          securityLevel: 'strict',
+          fontFamily: 'inherit',
+        });
+        for (const container of containers) {
+          try {
+            const { svg } = await mermaid.render(
+              `mermaid-svg-${renderSeq++}`,
+              container.dataset.source ?? ''
+            );
+            container.innerHTML = svg;
+          } catch (error) {
+            container.textContent = '다이어그램 렌더링 실패: ' + String(error);
+          }
+        }
+      }
+
+      await renderAll();
+      // 다크/라이트 토글 시 테마에 맞춰 다시 그린다
+      window.addEventListener('theme-change', renderAll);
+    }
+
+    initMermaid();
+  </script>
+</BaseLayout>
