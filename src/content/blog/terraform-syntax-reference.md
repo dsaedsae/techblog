@@ -326,3 +326,12 @@ import {
 - [ ] 비밀값은 state에 남는다는 전제로 설계
 - [ ] `terraform fmt -check`와 `terraform validate`를 CI에 포함
 - [ ] plan 결과를 리뷰 없이 apply하지 않기 (특히 `-auto-approve` 금지)
+
+---
+
+문법 다음 단계는 실전 구축이다.
+
+- 이 문법들을 조합해 실제 VPC를 구축하는 과정:
+  [Terraform으로 구축하는 프로덕션 VPC](/techblog/blog/terraform-vpc-complete-guide/)
+- 팀 단위 운영 구조(스택 분할, 모듈 계약, CI/CD):
+  [엔터프라이즈 Terraform 운영 구조](/techblog/blog/terraform-enterprise-structure/)

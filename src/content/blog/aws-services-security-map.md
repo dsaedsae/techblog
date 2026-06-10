@@ -175,4 +175,6 @@ Practices, CIS Benchmark 같은 표준을 켜면 Config 기반으로 자동
 4. **네트워크**: 퍼블릭/프라이빗 분리, SSM Session Manager, VPC Endpoint
 5. **데이터**: 계정 수준 S3 BPA, CMK 전환, Secrets Manager
 
-각 단계는 다음 글에서 Terraform 코드로 구현하는 과정을 다룰 예정이다.
+네트워크 영역(4번)의 실제 구현은
+[Terraform으로 구축하는 프로덕션 VPC](/techblog/blog/terraform-vpc-complete-guide/)에서
+서브넷 설계부터 SG 체인, VPC Endpoint까지 동작하는 코드로 다룬다.
