@@ -1,11 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PostList from '../components/PostList.astro';
-import { SITE_TITLE, SITE_DESCRIPTION, CATEGORIES, CATEGORY_IDS } from '../consts';
-import { getPosts, categoryUrl } from '../lib/posts';
+import {
+  SITE_TITLE,
+  SITE_DESCRIPTION,
+  CATEGORIES,
+  CATEGORY_IDS,
+  SERIES,
+  SERIES_IDS,
+} from '../consts';
+import { getPosts, getSeriesPosts, categoryUrl, seriesUrl } from '../lib/posts';
 
 const posts = await getPosts();
 const recentPosts = posts.slice(0, 10);
+
+const seriesList = await Promise.all(
+  SERIES_IDS.map(async (id) => ({
+    id,
+    meta: SERIES[id],
+    count: (await getSeriesPosts(id)).length,
+  }))
+);
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -24,7 +39,24 @@ const recentPosts = posts.slice(0, 10);
   </section>
 
   <section>
-    <h2 class="page-title" style="font-size: 1.2rem;">최신 글</h2>
+    <h2 class="page-title" style="font-size: 1.2rem;">시리즈</h2>
+    <div class="category-grid">
+      {
+        seriesList.map(({ id, meta, count }) => (
+          <a class="category-card" href={seriesUrl(id)}>
+            <h2>
+              {meta.title}
+              <span class="count">{count}부작</span>
+            </h2>
+            <p>{meta.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section>
+    <h2 class="page-title" style="font-size: 1.2rem; margin-top: 2.2rem;">최신 글</h2>
     <PostList posts={recentPosts} />
   </section>
 </BaseLayout>

@@ -4,6 +4,8 @@ description: '3계층 서브넷, NAT 전략, 보안 그룹 체인, VPC Endpoint,
 date: 2026-06-10
 category: terraform
 tags: [terraform, aws, vpc, security-group, network]
+series: terraform-zero-to-prod
+seriesOrder: 3
 ---
 
 VPC 구축 글은 많지만 대부분 둘 중 하나다. 콘솔 스크린샷 나열이거나,

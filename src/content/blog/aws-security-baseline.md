@@ -4,6 +4,8 @@ description: '새 AWS 계정을 받았을 때 가장 먼저 적용해야 할 보
 date: 2026-06-02
 category: aws
 tags: [aws, iam, security-baseline, cloudtrail]
+series: aws-security-ops
+seriesOrder: 2
 ---
 
 신규 계정은 기본 설정 그대로 두면 루트 사용자 노출, 퍼블릭 S3 버킷,

@@ -1,0 +1,44 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
+import { SERIES, SERIES_IDS, CATEGORIES, type SeriesId } from '../../consts';
+import { getSeriesPosts, postUrl, categoryUrl } from '../../lib/posts';
+
+export async function getStaticPaths() {
+  return SERIES_IDS.map((series) => ({ params: { series } }));
+}
+
+const series = Astro.params.series as SeriesId;
+const meta = SERIES[series];
+const posts = await getSeriesPosts(series);
+---
+
+<BaseLayout title={meta.title} description={meta.description}>
+  <header class="post-header">
+    <div class="post-meta">
+      <span class="category-badge">시리즈</span>
+      <span>{posts.length}부작</span>
+    </div>
+    <h1>{meta.title}</h1>
+    <p class="post-item-desc">{meta.description}</p>
+  </header>
+
+  <ol class="series-toc">
+    {
+      posts.map((post) => (
+        <li>
+          <div class="series-toc-meta">
+            <a class="category-badge" href={categoryUrl(post.data.category)}>
+              {CATEGORIES[post.data.category].label}
+            </a>
+            <FormattedDate date={post.data.date} />
+          </div>
+          <a class="post-item-title" href={postUrl(post)}>
+            {post.data.title}
+          </a>
+          <p class="post-item-desc">{post.data.description}</p>
+        </li>
+      ))
+    }
+  </ol>
+</BaseLayout>

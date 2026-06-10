@@ -28,9 +28,13 @@ description: '목록과 OG 태그에 쓰이는 한 줄 요약'
 date: 2026-06-10
 category: aws # aws | terraform | devsecops | ai-agent-security | scripts
 tags: [aws, iam]
+series: aws-security-ops # 시리즈 소속 시 (선택, src/consts.ts의 SERIES에 정의)
+seriesOrder: 2 # 시리즈 내 회차 (series 지정 시 필수)
 draft: false # true면 빌드에서 제외 (선택)
 ---
 ```
+
+새 시리즈를 만들려면 `src/consts.ts`의 `SERIES_IDS`와 `SERIES`에 항목을 추가합니다.
 
 - 코드 블록 파일명 표시: ` ```hcl title="main.tf" `
 - Mermaid 다이어그램: ` ```mermaid ` 코드 펜스 사용 (클라이언트에서 SVG로 렌더링)

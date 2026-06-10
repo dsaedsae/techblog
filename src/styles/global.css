@@ -506,6 +506,130 @@ html[data-theme='dark'] .astro-code span {
   opacity: 1;
 }
 
+/* ===== 시리즈 ===== */
+.series-box {
+  margin: 0 0 2.2rem;
+  padding: 1rem 1.2rem;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.series-box-title {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.series-box-title a {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.series-box-title a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.series-progress {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  margin-left: 0.4rem;
+  color: var(--accent);
+}
+
+.series-box ol {
+  margin: 0;
+  padding-left: 1.5rem;
+  font-size: 0.9rem;
+}
+
+.series-box li {
+  margin: 0.3rem 0;
+  color: var(--text-muted);
+}
+
+.series-box li.current {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.series-box li.current::after {
+  content: ' ← 현재 글';
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--accent);
+}
+
+.series-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--border);
+}
+
+.series-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  max-width: 48%;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.series-nav a:hover {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.series-nav a span {
+  font-size: 0.78rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.series-nav-next {
+  margin-left: auto;
+  text-align: right;
+}
+
+.series-toc {
+  list-style: none;
+  counter-reset: series-part;
+  margin: 0;
+  padding: 0;
+}
+
+.series-toc > li {
+  counter-increment: series-part;
+  position: relative;
+  padding: 1.3rem 0 1.3rem 3.2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.series-toc > li::before {
+  content: counter(series-part, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 1.45rem;
+  font-family: var(--font-mono);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.series-toc-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
 /* ===== Mermaid 다이어그램 ===== */
 .mermaid-diagram {
   margin: 1.4rem 0;

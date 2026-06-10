@@ -1,15 +1,31 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { CATEGORIES } from '../consts';
-import { categoryUrl, tagUrl, type Post } from '../lib/posts';
+import { CATEGORIES, SERIES } from '../consts';
+import {
+  categoryUrl,
+  tagUrl,
+  postUrl,
+  seriesUrl,
+  getSeriesPosts,
+  type Post,
+} from '../lib/posts';
 
 interface Props {
   post: Post;
 }
 
 const { post } = Astro.props;
-const { title, description, date, category, tags } = post.data;
+const { title, description, date, category, tags, series } = post.data;
+
+// 시리즈 소속 글이면 전체 회차와 현재 위치를 계산한다
+const seriesPosts = series ? await getSeriesPosts(series) : [];
+const seriesIndex = seriesPosts.findIndex((p) => p.id === post.id);
+const prevPost = seriesIndex > 0 ? seriesPosts[seriesIndex - 1] : undefined;
+const nextPost =
+  seriesIndex >= 0 && seriesIndex < seriesPosts.length - 1
+    ? seriesPosts[seriesIndex + 1]
+    : undefined;
 ---
 
 <BaseLayout
@@ -38,9 +54,57 @@ const { title, description, date, category, tags } = post.data;
         }
       </ul>
     </header>
+
+    {
+      series && (
+        <aside class="series-box">
+          <p class="series-box-title">
+            시리즈 · <a href={seriesUrl(series)}>{SERIES[series].title}</a>
+            <span class="series-progress">
+              {seriesIndex + 1}/{seriesPosts.length}
+            </span>
+          </p>
+          <ol>
+            {seriesPosts.map((p) =>
+              p.id === post.id ? (
+                <li class="current" aria-current="page">
+                  {p.data.title}
+                </li>
+              ) : (
+                <li>
+                  <a href={postUrl(p)}>{p.data.title}</a>
+                </li>
+              )
+            )}
+          </ol>
+        </aside>
+      )
+    }
+
     <div class="prose">
       <slot />
     </div>
+
+    {
+      series && (prevPost || nextPost) && (
+        <nav class="series-nav" aria-label="시리즈 내 이동">
+          {prevPost ? (
+            <a class="series-nav-prev" href={postUrl(prevPost)}>
+              <span>← 이전 글</span>
+              {prevPost.data.title}
+            </a>
+          ) : (
+            <span />
+          )}
+          {nextPost && (
+            <a class="series-nav-next" href={postUrl(nextPost)}>
+              <span>다음 글 →</span>
+              {nextPost.data.title}
+            </a>
+          )}
+        </nav>
+      )
+    }
   </article>
 
   <script>

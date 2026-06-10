@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SERIES, SERIES_IDS } from '../../consts';
+import { getSeriesPosts, seriesUrl } from '../../lib/posts';
+
+const seriesList = await Promise.all(
+  SERIES_IDS.map(async (id) => ({
+    id,
+    meta: SERIES[id],
+    count: (await getSeriesPosts(id)).length,
+  }))
+);
+---
+
+<BaseLayout title="Series" description="주제별로 순서대로 읽는 시리즈 모음">
+  <h1 class="page-title">Series</h1>
+  <p class="page-desc">
+    하나의 주제를 처음부터 끝까지 다루는 연재 모음입니다. 각 시리즈는 읽는
+    순서대로 정리되어 있습니다.
+  </p>
+  <div class="category-grid">
+    {
+      seriesList.map(({ id, meta, count }) => (
+        <a class="category-card" href={seriesUrl(id)}>
+          <h2>
+            {meta.title}
+            <span class="count">{count}부작</span>
+          </h2>
+          <p>{meta.description}</p>
+        </a>
+      ))
+    }
+  </div>
+</BaseLayout>

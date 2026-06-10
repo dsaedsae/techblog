@@ -4,6 +4,8 @@ description: '회전되지 않은 IAM 액세스 키를 찾아 보고서로 출�
 date: 2026-06-09
 category: scripts
 tags: [python, aws, iam, automation]
+series: aws-security-ops
+seriesOrder: 3
 ---
 
 장기 자격 증명(액세스 키)은 만들지 않는 것이 최선이지만, 현실에는 항상

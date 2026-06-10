@@ -4,6 +4,8 @@ description: '스택 분할, 모듈 계약, 태깅 거버넌스, OIDC 기반 Git
 date: 2026-06-10
 category: terraform
 tags: [terraform, ci-cd, github-actions, oidc, governance]
+series: terraform-zero-to-prod
+seriesOrder: 4
 ---
 
 Terraform 코드가 망가지는 시점은 문법을 몰라서가 아니라 **구조 없이
